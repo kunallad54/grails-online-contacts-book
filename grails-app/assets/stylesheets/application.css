@@ -9,5 +9,6 @@
 *
 *= require bootstrap
 *= require style
+*= require fontawesome/css/all.css
 *= require_self
 */

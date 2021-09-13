@@ -11,7 +11,7 @@ class MemberController {
      */
     def index() {
         def response = memberService.list(params)
-        [memberList: response.list, total:response.count]
+        [memberList: response.list, total: response.count]
     }
 
     /**
@@ -22,10 +22,10 @@ class MemberController {
      */
     def details(Integer id) {
         def response = memberService.getById(id)
-        if(!response) {
-            redirect(controller : "member",action : "index")
+        if (!response) {
+            redirect(controller: "member", action: "index")
         } else {
-            [member : response]
+            [member: response]
         }
     }
 
@@ -42,10 +42,8 @@ class MemberController {
         def response = memberService.save(params)
         if (!response.isSuccess) {
             flash.redirectParams = response.model
-            flash.message = AppUtil.infoMessage(g.message(code:"unable.to.save"),false)
             redirect(controller: "member", action: "create")
         }else{
-            flash.message = AppUtil.infoMessage(g.message(code: "saved"))
             redirect(controller: "member", action: "index")
         }
     }
@@ -67,16 +65,16 @@ class MemberController {
 
     def update() {
         def response = memberService.getById(params.id)
-        if (!response){
+        if (!response) {
             flash.message = AppUtil.infoMessage(g.message(code: "invalid.entity"), false)
             redirect(controller: "member", action: "index")
-        }else{
+        } else {
             response = memberService.update(response, params)
-            if (!response.isSuccess){
+            if (!response.isSuccess) {
                 flash.redirectParams = response.model
                 flash.message = AppUtil.infoMessage(g.message(code: "unable.to.update"), false)
                 redirect(controller: "member", action: "edit")
-            }else{
+            } else {
                 flash.message = AppUtil.infoMessage(g.message(code: "updated"))
                 redirect(controller: "member", action: "index")
             }
@@ -85,14 +83,14 @@ class MemberController {
 
     def delete(Integer id) {
         def response = memberService.getById(id)
-        if (!response){
+        if (!response) {
             flash.message = AppUtil.infoMessage(g.message(code: "invalid.entity"), false)
             redirect(controller: "member", action: "index")
-        }else{
+        } else {
             response = memberService.delete(response)
-            if (!response){
+            if (!response) {
                 flash.message = AppUtil.infoMessage(g.message(code: "unable.to.delete"), false)
-            }else{
+            } else {
                 flash.message = AppUtil.infoMessage(g.message(code: "deleted"))
             }
             redirect(controller: "member", action: "index")
